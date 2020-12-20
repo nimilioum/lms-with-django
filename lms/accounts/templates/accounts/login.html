@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '/css/logstyle.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron jumbotron-fluid p-3">
+    <h1 align="center">Login page</h1>
+    <p class="text-black-50" align="center">let's log in</p>
+</div>
+
+<fieldset style="margin: auto;">
+    <div class="wrapper bg-white">
+        <div class="h4 text-muted text-center pt-2">Enter your login details</div>
+        <form class="pt-3" method="post" action="">
+            {% csrf_token %}
+            <div class="form-group py-2">
+                <div class="input-field"> <span class="far fa-user p-2"></span>
+                    <input type="text" placeholder="Username" required name="username"> </div>
+            </div>
+            <div class="form-group py-1 pb-2">
+                <div class="input-field"> <span class="fas fa-lock p-2"></span>
+                    <input type="password" placeholder="Enter your Password" required class="" name="password">
+                </div>
+            </div>
+            <div class="d-flex align-items-start">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                    <label class="custom-control-label" for="customCheck">Remember me</label>
+                </div>
+                <div class="ml-auto"> <a href="" onclick="window.alert('This is none of my business! You should have remembered it!')"
+                                         id="forgot">Forgot Password?</a>
+                </div>
+
+            </div>
+
+            {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+
+            <button class="btn btn-block text-center my-3">Log in</button>
+{#            <div class="text-center pt-3 text-muted">Not a member? <a href="{% url 'register' %}" target="_blank">Sign up</a></div>#}
+        </form>
+
+    </div>
+</fieldset>
+
+</body>
+</html>

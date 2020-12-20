@@ -1,0 +1,39 @@
+{% extends 'accounts/template.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid p-3">
+    <h1 align="center">{{ request.user }}'s page</h1>
+    <p class="text-black-50" align="center"> Blah Blah Blah...</p>
+</div>
+
+<div class="col">
+		<h5>Classes of {{ request.user }}</h5>
+		<hr>
+		<div class="card card-body">
+{#			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>#}
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Student</th>
+					<th>id</th>
+{#                    <th>date</th>#}
+				</tr>
+
+                {% for lesson in lessons %}
+                <tr>
+					<td></td>
+					<td>{{ lesson }}</td>
+					<td>{{ lesson.relate_class }}</td>
+{#                    <td>Profile</td>#}
+				</tr>
+
+                {% endfor %}
+            </table>
+        </div>
+</div>
+{% endblock %}

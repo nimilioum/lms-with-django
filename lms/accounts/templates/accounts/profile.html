@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '/css/signupstyle.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Update profile</title>
+</head>
+<body>
+
+<div class="jumbotron jumbotron-fluid p-3">
+    <h1 align="center">Update your profile</h1>
+{#    <p class="text-black-50" align="center">Register for no reason...</p>#}
+</div>
+        <fieldset style="margin: auto;">
+    <div class="wrapper bg-white">
+        <div class="h4 text-muted text-center pt-2">Fill the form</div>
+        <form class="pt-3" method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group py-2">
+                <label class="text-secondary">First name:</label>
+                <div class="input-field">
+{#                    <input type="text" placeholder="e.g:Jack123" required>#}
+                    {{ form.fname }}
+                </div>
+            </div>
+
+            <div class="form-group py-2">
+                <label class="text-secondary">Last name:</label>
+                <div class="input-field">
+{#                    <input type="text" placeholder="e.g:Jack123" required>#}
+                    {{ form.lname }}
+                </div>
+            </div>
+
+            <div class="form-group py-2">
+                <label class="text-secondary">Phone:</label>
+                <div class="input-field">
+{#                    <input type="text" placeholder="e.g:Jack123" required>#}
+                    {{ form.email }}
+                </div>
+            </div>
+
+
+            <button class="btn btn-block text-center my-3" type="submit">Submit</button>
+        </form>
+
+    </div>
+</fieldset>
+
+</body>
+</html>

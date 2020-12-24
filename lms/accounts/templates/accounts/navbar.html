@@ -3,15 +3,20 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}"> Home </a> </li>
-                <li class="nav-item"><a class="nav-link" href=""> Profile </a></li>
+                <li class="nav-item"><a class="nav-link" href="#"> Profile </a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'classes' %}"> Classes </a></li>
-                <li class="nav-item"><a class="nav-link" href=""> Homework </a></li>                         <!-- link to scroll     -->
+                <li class="nav-item"><a class="nav-link" href="#"> Homework </a></li>                         <!-- link to scroll     -->
+
 
 
             </ul>
         </div>
 
-        <div class="text-white" style="margin-right: 50%;">LMS</div>
+        <div class="text-white" style="margin-right: 38%; font-size: 20px;">LMS</div>
 
+         {% if request.user.is_authenticated %}
+            <span style="color: white; margin-right: 20px">Hello {{ request.user }}</span>
+            <span ><a href="{% url 'logout' %}" class="text-light nav-link" style="margin-right: 20px">Log out</a> </span>
+        {% endif %}
 
 </nav>

@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
+from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
@@ -10,9 +11,10 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     student = request.user.student
     classes = student.classes.first()
-    lessons = classes.lesson_set.all()
+    # lessons = classes.lesson_set.all()
 
-    context = {'students':student,'classes':classes,'lessons':lessons}
+    # context = {'students':student,'classes':classes,'lessons':lessons}
+    context = {'students': student, 'classes': classes}
     return render(request,'accounts/student.html',context)
 
 
@@ -50,7 +52,24 @@ def login_page(request):
         password = request.POST.get('password')
         user = authenticate(request,username=username,password=password)
         if user is not None :
+            # print('***   ',user.id)
             login(request,user)
-            print('user : ',user)
+            # print('user : ',user)
             return redirect('home')
     return render(request, 'accounts/login.html')
+
+
+def register_page(request):
+    form = CreateUser()
+
+    if request.method == 'POST':
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+            user.save()
+            return redirect('login')
+
+    context = {'form' : form}
+    return render(request,'accounts/register.html',context)

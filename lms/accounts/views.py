@@ -65,10 +65,7 @@ def register_page(request):
     if request.method == 'POST':
         form = CreateUser(request.POST)
         if form.is_valid():
-            user = form.save()
-            group = Group.objects.get(name='student')
-            user.groups.add(group)
-            user.save()
+            form.save()
             return redirect('login')
 
     context = {'form' : form}

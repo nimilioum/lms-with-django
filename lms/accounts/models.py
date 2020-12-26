@@ -1,5 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+import random
+
+
+def get_path(instance,filename):
+    now = datetime.now()
+    time = now.strftime('%d_%H')
+    date = now.strftime('%Y_%m')
+    end = filename.split('.')[-1]
+    return date + '/' + time +'_'+ str(random.randrange(100000,999999)) + '.' + end
 
 
 # Create your models here.
@@ -59,7 +69,8 @@ class Student(models.Model):
     lname = models.CharField(max_length=100, null=True, default=' ')
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     email = models.EmailField(null=True)
-    student_number = models.CharField(max_length=15, null=True, default=' ')
+    image = models.ImageField(null=True,upload_to=get_path,default='profile.png')
+    student_id = models.CharField(max_length=15, null=True, default=' ')
     department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
     classes = models.ManyToManyField(Class)
 
@@ -71,7 +82,19 @@ class Teacher(models.Model):
     fname = models.CharField(max_length=100, null=True, default=' ')
     lname = models.CharField(max_length=100, null=True, default=' ')
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    student_number = models.CharField(max_length=15, null=True, default=' ')
+    teacher_id = models.CharField(max_length=15, null=True, default=' ')
+    department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
+    classes = models.ManyToManyField(Class)
+
+    def __str__(self):
+        return str(self.fname) + ' ' + str(self.lname)
+
+
+class Staff(models.Model):
+    fname = models.CharField(max_length=100, null=True, default=' ')
+    lname = models.CharField(max_length=100, null=True, default=' ')
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    teacher_id = models.CharField(max_length=15, null=True, default=' ')
     department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
     classes = models.ManyToManyField(Class)
 

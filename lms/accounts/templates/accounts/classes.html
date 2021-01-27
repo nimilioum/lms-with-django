@@ -1,12 +1,12 @@
 {% extends 'accounts/template.html' %}
 
 {% block title %}
-Home
+Classes
 {% endblock %}
 
 {% block content %}
 <div class="col">
-		<h5>Classes of {request.user.student}:</h5>
+		<h5>Classes of {{ request.user.student }}:</h5>
 		<hr>
 		<div class="card card-body">
 {#			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>#}

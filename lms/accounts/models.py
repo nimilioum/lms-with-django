@@ -1,18 +1,28 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser
 from datetime import datetime
 import random
 
 
 def get_path(instance,filename):
+    id = instance.student_id
     now = datetime.now()
     time = now.strftime('%d_%H')
     date = now.strftime('%Y_%m')
     end = filename.split('.')[-1]
-    return date + '/' + time +'_'+ str(random.randrange(100000,999999)) + '.' + end
+    return date + '/' + time +'_'+ id + '.' + end
 
 
 # Create your models here.
+# class LMSUser(AbstractUser):
+#     is_student = models.BooleanField()
+#     is_teacher = models.BooleanField()
+#     is_lms_staff = models.BooleanField()
+#
+#     def __str__(self):
+#         return self.username
+
+
 class Department(models.Model):
     name = models.CharField(max_length=100, null=True, default=' ')
 
@@ -31,6 +41,9 @@ class Major(models.Model):
 class Class(models.Model):
     name = models.CharField(max_length=100, null=True, default=' ')
     major = models.ForeignKey(Major, null=True, on_delete=models.CASCADE)
+
+    def get_lessons(self):
+        return self.lesson_set.all()
 
     def __str__(self):
         return self.name
@@ -74,6 +87,17 @@ class Student(models.Model):
     department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
     classes = models.ManyToManyField(Class)
 
+    def get_classes(self):
+        class_list = self.classes.all()
+        return class_list
+
+    def get_lessons(self):
+        class_list = self.get_classes()
+        lessons = class_list.none()
+        for cls in class_list:
+            lessons = lessons | cls.get_lessons()
+        return lessons
+
     def __str__(self):
         return str(self.fname) + ' ' + str(self.lname)
 
@@ -97,6 +121,14 @@ class Staff(models.Model):
     teacher_id = models.CharField(max_length=15, null=True, default=' ')
     department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
     classes = models.ManyToManyField(Class)
+
+    def get_classes(self):
+        class_list = self.classes.all()
+        return class_list
+
+    # def get_lessons(self):
+    #     lessons = None
+        # class_list = self.get_
 
     def __str__(self):
         return str(self.fname) + ' ' + str(self.lname)

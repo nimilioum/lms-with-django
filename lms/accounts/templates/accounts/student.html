@@ -9,34 +9,97 @@ Home
 
 <div class="jumbotron jumbotron-fluid p-3">
     <h1 align="center">{{ request.user }}'s page</h1>
-    <p class="text-black-50" align="center"> Blah Blah Blah...</p>
+{#    <p class="text-black-50" align="center"> Blah Blah Blah...</p>#}
 </div>
 
-{#<img src="{% static '/images/profile.png' %}" style="width: 100px;height: 100px;">#}
+
+{#    <div class="container">#}
+
+    <div class="row" style="width: 100%;">
+        <div class="col-md-3">
+            <img src="{{ student.image.url }}" class="rounded-circle" style="width: 250px;height: 250px; margin-left: 10%;">
+            <br>
+            <br>
+            <a class="btn btn-success" href="{% url 'student_profile' %}" style="margin-left: 23%;">Change profile</a>
+        </div>
+        <div class="col-md-9">
+
+            <div class="row">
+                <div class="col-md-3" style=" border-radius: 13px;background: #30dfff;">
+                    <h6 style="text-align: center; margin-top: 5px;" class="text-secondary">First name</h6>
+                    <hr>
+                    <p style="text-align: center" class="text-dark">{{ student.fname }}</p>
+                </div>
+
+                <div class="col-md-1"></div>
+
+                <div class="col-md-3" style=" border-radius: 13px;background: #30dfff;">
+                    <h6 style="text-align: center; margin-top: 5px;" class="text-secondary">Last name</h6>
+                    <hr>
+                    <p style="text-align: center" class="text-dark">{{ student.lname }}</p>
+                </div>
+
+                <div class="col-md-1"></div>
+
+                <div class="col-md-3" style=" border-radius: 13px;background: #30dfff;">
+                    <h6 style="text-align: center; margin-top: 5px;" class="text-secondary">Student ID</h6>
+                    <hr>
+                    <p style="text-align: center" class="text-dark">{{ student.student_id }}</p>
+                </div>
+            </div>
+            <div style="height: 20px;"></div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3" style=" border-radius: 13px;background: #30dfff;">
+                    <h6 style="text-align: center; margin-top: 5px;" class="text-secondary">Email</h6>
+                    <hr>
+                    <p style="text-align: center" class="text-dark">{{ student.email }}</p>
+                </div>
+
+                    <div class="col-md-2"></div>
+
+                    <div class="col-md-3" style=" border-radius: 13px;background: #30dfff;">
+                    <h6 style="text-align: center; margin-top: 5px;" class="text-secondary">Department</h6>
+                    <hr>
+                    <p style="text-align: center" class="text-dark">{{ student.department }}</p>
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{#    </div>#}
+
+
+
 
 
 <div class="col">
+<br>
 		<h5>Classes of {{ request.user }}</h5>
 		<hr>
 		<div class="card card-body">
-{#			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>#}
 			<table class="table table-sm">
+            <thead class="thead-dark">
 				<tr>
 					<th></th>
-					<th>Student</th>
-					<th>id</th>
+					<th>Class</th>
+					<th>page</th>
 {#                    <th>date</th>#}
 				</tr>
+                </thead>
 
-{#                {% for lesson in lessons %}#}
-{#                <tr>#}
-{#					<td></td>#}
-{#					<td>{{ lesson }}</td>#}
-{#					<td>{{ lesson.relate_class }}</td>#}
-{#                    <td>Profile</td>#}
-{#				</tr>#}
-{##}
-{#                {% endfor %}#}
+                {% for cls in classes %}
+                <tr>
+					<td></td>
+					<td>{{ cls }}</td>
+                    <td><a class="btn btn-primary  btn-sm" href="{% url 'lessons' cls.id %}">View</a></td>
+				</tr>
+
+                {% endfor %}
             </table>
         </div>
 </div>

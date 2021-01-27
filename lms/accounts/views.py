@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
 from django.contrib.auth.models import Group
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 
 
@@ -10,37 +10,39 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def home(request):
     student = request.user.student
-    classes = student.classes.first()
+    classes = student.get_classes()
     # lessons = classes.lesson_set.all()
 
     # context = {'students':student,'classes':classes,'lessons':lessons}
-    context = {'students': student, 'classes': classes}
+    context = {'student': student, 'classes': classes}
     return render(request,'accounts/student.html',context)
 
 
+@login_required
 def classes(request):
     student = request.user.student
-    classes = student.classes.all()
+    classes = student.get_classes()
     context = {'students': student, 'classes': classes,}
     return render(request, 'accounts/classes.html', context)
 
 
+@login_required
 def lessons(request,id):
-    lessons = Class.objects.get(id=id).lesson_set.all()
-    # teacher = lessons[0].relate_class.teacher_set.first()
+    # lessons = request.user.student.get_lessons()     # this will be used in Home page
+    lessons = Class.objects.get(id=id).get_lessons()
 
     context = {'lessons':lessons}
     return render(request,'accounts/lessons.html',context)
 
 
-def update_profile(request):
+@login_required
+def update_student(request):
     student = request.user.student
     form = StudentForm(instance=student)
     if request.method == 'POST' :
-        form = StudentForm(request.POST,instance=student)
+        form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
-            print('saved')
             return redirect('home')
     context = {'form': form}
     return render(request,'accounts/profile.html',context)

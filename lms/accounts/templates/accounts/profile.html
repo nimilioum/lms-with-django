@@ -20,7 +20,7 @@
         <fieldset style="margin: auto;">
     <div class="wrapper bg-white">
         <div class="h4 text-muted text-center pt-2">Fill the form</div>
-        <form class="pt-3" method="POST" action="">
+        <form class="pt-3" method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group py-2">
                 <label class="text-secondary">First name:</label>
@@ -38,11 +38,20 @@
                 </div>
             </div>
 
-            <div class="form-group py-2">
-                <label class="text-secondary">Phone:</label>
+
+             <div class="form-group py-2">
+                <label class="text-secondary">Email:</label>
                 <div class="input-field">
 {#                    <input type="text" placeholder="e.g:Jack123" required>#}
                     {{ form.email }}
+                </div>
+            </div>
+
+            <div class="form-group py-2">
+                <label class="text-secondary">pic:</label>
+                <div class="form-control-file">
+{#                    <input type="file" class="form-control-file" required>#}
+                    {{ form.image }}
                 </div>
             </div>
 
